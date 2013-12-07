@@ -1,5 +1,5 @@
 import java.util.*;
-public class poker
+public class week4
 {
   public static void main(String[] args)
   {
@@ -14,22 +14,17 @@ public class poker
   int[] values = new int[deckSize];
   int[] hand = new int[5];
   
-  generateHand(hand,deckSize);		//Generating the 5 random unique numbers 
-  determineSuitsAndValues(hand,suits,values); //determine Suits And Values
+	generateHand(hand,deckSize);		//Generating the 5 random unique numbers 
   
-  sort(values);						//Sorting Algoritim 
-  winType = evaluateHandOfCards(hand,suits,values);
+	determineSuitsAndValues(hand,suits,values); //determine Suits And Values
+  
+	sort(values);						//Sorting Algoritim 
+	
+	winType = evaluateHandOfCards(hand,suits,values); //evaluates the hand
     
 	displayHand(hand,values,suits); 	//Displaying the cards	
-	//System.out.println(winType);
-	displayTypeOfWinIfAny(winType);   
 	
-	cardsOfSameSuit(suits);
-	cardsInConsecutiveDescendingSequence(values);
-	checkOtherPossibleCombinations(hand, values);    
-	  
-	
-	
+	displayTypeOfWinIfAny(winType);   //Display the winning type
 	
   }
 
@@ -121,7 +116,7 @@ public static int evaluateHandOfCards(int[] hand, int[] suits, int[] values)
     int winType = 0;  
     if (cardsOfSameSuit(suits))
     {
-      if (cardsInConsecutiveDescendingSequence(values))
+      if (cardsInConsecutiveDescendingSequence(hand, values))
       {
         if (values[0] == 12) winType = 9;
         else                 winType = 8;
@@ -130,14 +125,12 @@ public static int evaluateHandOfCards(int[] hand, int[] suits, int[] values)
     }
     else
     {
-      if (cardsInConsecutiveDescendingSequence(values)) 
+      if (cardsInConsecutiveDescendingSequence(hand, values)) 
 	    winType = 5;
       else 
 	    winType = checkOtherPossibleCombinations(hand, values);  
     }	 
-    
-	//System.out.print(winType);
-	return winType;
+    	return winType;
   }
   
   public static boolean cardsOfSameSuit(int suits[])
@@ -146,19 +139,17 @@ public static int evaluateHandOfCards(int[] hand, int[] suits, int[] values)
     for (int i = 0; (i < suits.length - 1) && sameSuit; i++)
       if (suits[i] != suits[i + 1])
         sameSuit = false;
-    //System.out.println("Cards of the same suit: "+sameSuit);
-	return sameSuit;
+   	return sameSuit;
   } 
 
-  public static boolean cardsInConsecutiveDescendingSequence(int values[])
+  public static boolean cardsInConsecutiveDescendingSequence(int hand[],int values[])
   {
     boolean consecutiveCards = true;
-    for (int i = 0; i < values.length - 1 && consecutiveCards; i++)
+    for (int i = 0; i < hand.length - 1 && consecutiveCards; i++)
       if (values[i] != values[i + 1] + 1)
         consecutiveCards = false;
-     
-	//System.out.println("Cards in descending order: "+consecutiveCards);
-	return consecutiveCards;
+   
+   	return consecutiveCards;
   } 
   
   public static int checkOtherPossibleCombinations(int[] hand, int[] values)
@@ -176,25 +167,23 @@ public static int evaluateHandOfCards(int[] hand, int[] suits, int[] values)
           continueCardComparison = false;
       } 
     } 
-	//System.out.println("same kind"+sameKind);
     return sameKind;
   } 
  
   public static void displayTypeOfWinIfAny(int winType)
   {
-	//String userMessage = "";
 	switch(winType)
 	{
-       case 0: System.out.println("Not a winning hand"); break;
-      case 1: System.out.println("One pair");           break;
-      case 2: System.out.println("Two pair");           break;
-      case 3: System.out.println("Three of a kind");    break;
-      case 4: System.out.println("Full house");         break;
-      case 5: System.out.println("Straight");           break;
-      case 6: System.out.println("Four of a kind");     break;
-      case 7: System.out.println("Flush");              break;
-      case 8: System.out.println("Straight flush");     break;
-      case 9: System.out.println("Royal flush");        break;
+       case 0: System.out.println("Not a winning hand"); break; 
+      case 1: System.out.println("One pair");           break; 
+      case 2: System.out.println("Two pair");           break; 
+      case 3: System.out.println("Three of a kind");    break; 
+      case 4: System.out.println("Full house");         break; 
+      case 5: System.out.println("Straight");           break; 
+      case 6: System.out.println("Four of a kind");     break; 
+      case 7: System.out.println("Flush");              break; 
+      case 8: System.out.println("Straight flush");     break; 
+      case 9: System.out.println("Royal flush");        break; 
     } 
   } 
     
